@@ -16,6 +16,7 @@ type Options struct {
 	Tables      bool
 	Smartypants bool
 	Fractions   bool
+	Highlight   bool
 }
 
 // DefaultOptions return an options struct with default configuration

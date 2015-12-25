@@ -1666,3 +1666,12 @@ func TestCommonMark(t *testing.T) {
 		}
 	}
 }
+
+func TestHighlight(t *testing.T) {
+	f, err := ioutil.ReadFile("test/highlight.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out := New(string(f), &Options{true, true, false, false, true}).Render()
+	ioutil.WriteFile("test/highlight.html", []byte(out), 0600)
+}
