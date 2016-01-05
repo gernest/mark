@@ -2,10 +2,12 @@ package mark
 
 import (
 	"fmt"
-	"github.com/gernest/frontman/syntax"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/gernest/frontman/syntax"
+	"github.com/gernest/zanzibar/template"
 )
 
 // A Node is an element in the parse tree.
@@ -210,17 +212,15 @@ func (n *CodeNode) Render() string {
 }
 
 func (p *parse) newCode(pos Pos, lang, text string) *CodeNode {
-	// DRY: see `escape()` below
-	text = strings.NewReplacer("<", "&lt;", ">", "&gt;", "\"", "&quot;", "&", "&amp;").Replace(text)
 	if p.options != nil {
 		if p.options.Highlight {
 			txt, err := syntax.Highlight([]byte(text), true, "")
 			if err == nil {
-				text = string(txt)
+				return &CodeNode{NodeType: NodeCode, Pos: pos, Lang: lang, Text: string(txt)}
 			}
 		}
 	}
-
+	text = template.HTMLEscapeString(text)
 	return &CodeNode{NodeType: NodeCode, Pos: pos, Lang: lang, Text: text}
 }
 
