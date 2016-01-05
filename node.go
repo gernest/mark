@@ -214,7 +214,7 @@ func (n *CodeNode) Render() string {
 func (p *parse) newCode(pos Pos, lang, text string) *CodeNode {
 	if p.options != nil {
 		if p.options.Highlight {
-			txt, err := syntax.Highlight([]byte(text), true, "")
+			txt, err := syntax.Highlight([]byte(text), lang)
 			if err == nil {
 				return &CodeNode{NodeType: NodeCode, Pos: pos, Lang: lang, Text: string(txt)}
 			}
