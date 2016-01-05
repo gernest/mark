@@ -205,10 +205,10 @@ type CodeNode struct {
 func (n *CodeNode) Render() string {
 	var attr string
 	if n.Lang != "" {
-		attr = fmt.Sprintf(" class=\"lang-%s\"", n.Lang)
+		attr = fmt.Sprintf(" class=\"lang-%s prettyprint\"", n.Lang)
 	}
 	code := fmt.Sprintf("<%[1]s%s>%s</%[1]s>", "code", attr, n.Text)
-	return wrap("pre", code)
+	return fmt.Sprintf("<%[1]s%s>%s</%[1]s>", "pre", attr, code)
 }
 
 func (p *parse) newCode(pos Pos, lang, text string) *CodeNode {
